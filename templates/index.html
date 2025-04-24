@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Weather App</title>
+  <title>Weather Web</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      background-image: url(/static/earth.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       margin: 0;
+    }
+
+    body.zoomed {
+      background-size: 120%;
+      transition: background-size 1.5s ease;
     }
 
     h1 {
@@ -64,7 +72,7 @@
 </head>
 <body>
   <h1>Check the Weather</h1>
-  <form method="POST">
+  <form method="POST" onsubmit="return zoomThenSubmit(event)">
     <input type="text" name="city" placeholder="Enter city name" required />
     <button type="submit">Get Weather</button>
   </form>
@@ -80,6 +88,17 @@
       {% endif %}
     </div>
   {% endif %}
+  <script>
+    function zoomThenSubmit(event){
+      event.preventDefault();
+      document.body.classList.add('zoomed');
+
+      setTimeout(() =>{
+        event.target.submit();
+      }, 1500);
+      return false;
+    }
+  </script>
 </body>
 </html>
 
